@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 
-import { renderMdast } from './render'
+import { renderMdast } from './'
 
 export const Mso = ({children, gte}) =>
   <mso data-gte={gte} dangerouslySetInnerHTML={{
