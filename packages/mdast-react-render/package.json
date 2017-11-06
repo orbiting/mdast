@@ -8,7 +8,8 @@
     "prebuild": "rimraf lib",
     "build": "babel src --out-dir lib",
     "dev": "babel -w src --out-dir lib",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "babel-tape-runner src/**/*.test.js | faucet",
+    "tape": "babel-tape-runner"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,13 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "babel-tape-runner": "^2.0.1",
+    "enzyme": "^3.1.1",
+    "enzyme-adapter-react-16": "^1.0.4",
+    "faucet": "0.0.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "tape": "^4.8.0"
   }
 }
