@@ -4,7 +4,7 @@
   "description": "render mdast nodes according to a schema",
   "main": "lib/index.js",
   "scripts": {
-    "prepublishOnly": "npm run prebuild && npm run build",
+    "prepublish": "npm run prebuild && npm run build",
     "prebuild": "rimraf lib",
     "build": "babel src --out-dir lib",
     "dev": "babel -w src --out-dir lib",
@@ -33,5 +33,9 @@
     "react-dom": "^16.0.0",
     "rimraf": "^2.6.2",
     "tape": "^4.8.0"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   }
 }

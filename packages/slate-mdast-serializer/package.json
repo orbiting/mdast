@@ -4,7 +4,7 @@
   "description": "serialize slate to mdast and vice versa",
   "main": "lib/index.js",
   "scripts": {
-    "prepublishOnly": "npm run prebuild && npm run build",
+    "prepublish": "npm run prebuild && npm run build",
     "prebuild": "rimraf lib",
     "build": "babel src --out-dir lib",
     "dev": "babel -w src --out-dir lib",
