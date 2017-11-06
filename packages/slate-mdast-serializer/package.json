@@ -2,9 +2,9 @@
   "name": "slate-mdast-serializer",
   "version": "0.0.0",
   "description": "serialize slate to mdast and vice versa",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "tape src/**/*.test.js | faucet"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,21 @@
   "bugs": {
     "url": "https://github.com/orbiting/mdast/issues"
   },
-  "homepage": "https://github.com/orbiting/mdast#readme"
+  "homepage": "https://github.com/orbiting/mdast#readme",
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "immutable": "^3.8.2",
+    "slate": "^0.30.6",
+    "tape": "^4.8.0"
+  },
+  "peerDependencies": {
+    "slate": "^0.30.6"
+  },
+  "dependencies": {
+    "lodash.isequal": "^4.5.0",
+    "remark-frontmatter": "^1.1.0",
+    "remark-parse": "^4.0.0",
+    "remark-stringify": "^4.0.0",
+    "unified": "^6.1.5"
+  }
 }
