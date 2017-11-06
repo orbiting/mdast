@@ -1,12 +1,12 @@
-const unified = require('unified')
-const remarkStringify = require('remark-stringify')
-const remarkParse = require('remark-parse')
-const frontmatter = require('remark-frontmatter')
-const isEqual = require('lodash.isequal')
-const { Value } = require('slate')
+import unified from 'unified'
+import remarkStringify from 'remark-stringify'
+import remarkParse from 'remark-parse'
+import frontmatter from 'remark-frontmatter'
+import isEqual from 'lodash.isequal'
+import { Value } from 'slate'
 
-const zone = require('./zone')
-const meta = require('./meta')
+import * as zone from './zone'
+import * as meta from './meta'
 
 const rootRule = {
   match: object => object.kind === 'document',
@@ -299,4 +299,5 @@ class MarkdownSerializer {
   }
 }
 
+export default MarkdownSerializer
 module.exports = MarkdownSerializer

@@ -2,9 +2,14 @@
   "name": "slate-mdast-serializer",
   "version": "0.1.0",
   "description": "serialize slate to mdast and vice versa",
-  "main": "./src/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "tape src/**/*.test.js | faucet"
+    "prepublishOnly": "npm run prebuild && npm run build",
+    "prebuild": "rimraf lib",
+    "build": "babel src --out-dir lib",
+    "dev": "babel -w src --out-dir lib",
+    "test": "babel-tape-runner src/**/*.test.js | faucet",
+    "tape": "babel-tape-runner"
   },
   "repository": {
     "type": "git",
@@ -17,8 +22,12 @@
   },
   "homepage": "https://github.com/orbiting/mdast#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-tape-runner": "^2.0.1",
     "faucet": "0.0.1",
     "immutable": "^3.8.2",
+    "rimraf": "^2.6.2",
     "slate": "^0.30.6",
     "tape": "^4.8.0"
   },

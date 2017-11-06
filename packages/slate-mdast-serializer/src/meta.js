@@ -1,6 +1,6 @@
-const jsYaml = require('js-yaml')
+import jsYaml from 'js-yaml'
 
-module.exports.parse = () => {
+export const parse = () => {
   return parent => {
     if (parent.type !== 'root') {
       return
@@ -17,7 +17,7 @@ module.exports.parse = () => {
   }
 }
 
-module.exports.format = () => {
+export const format = () => {
   return parent => {
     if (parent.type !== 'root') {
       return
