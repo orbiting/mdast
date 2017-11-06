@@ -35,6 +35,7 @@
     "slate": "^0.30.6"
   },
   "dependencies": {
+    "js-yaml": "^3.10.0",
     "lodash.isequal": "^4.5.0",
     "remark-frontmatter": "^1.1.0",
     "remark-parse": "^4.0.0",
