@@ -9,15 +9,17 @@ const DefaultMissingNode = ({node, children}) => (
   </span>
 )
 
-export const renderMdast = (mdast, schema = {}, MissingNode = DefaultMissingNode) => {
+export const renderMdast = (mdast, schema = {}, options = {}) => {
+  const {parent = null, MissingNode = DefaultMissingNode} = options
+
   const rules = schema.rules.filter(rule => rule.matchMdast && rule.component)
 
-  const visit = (node, index, parent) => {
+  const visit = (node, index, nodeParent) => {
     if (node.type === 'text') {
       return node.value
     }
 
-    const rule = rules.find(r => r.matchMdast(node, index, parent))
+    const rule = rules.find(r => r.matchMdast(node, index, nodeParent))
     if (!rule) {
       if (!MissingNode) {
         throw new Error([
@@ -35,15 +37,25 @@ export const renderMdast = (mdast, schema = {}, MissingNode = DefaultMissingNode
 
     const Component = rule.component
 
-    const data = rule.getData
-      ? rule.getData(node, parent)
-      : (node.data || {})
+    let props
+    if (rule.props) {
+      props = rule.props(node, index, nodeParent)
+    } else {
+      props = {
+        data: node.data
+      }
+    }
 
     let children = null
     if (rule.rules) {
       children = renderMdast(
-        node.children, {
+        node.children,
+        {
           rules: rule.rules
+        },
+        {
+          ...options,
+          parent: node
         }
       )
     } else if (!rule.isVoid) {
@@ -51,14 +63,14 @@ export const renderMdast = (mdast, schema = {}, MissingNode = DefaultMissingNode
     }
 
     return (
-      <Component key={index} data={data}>
+      <Component key={index} {...props}>
         {children}
       </Component>
     )
   }
 
-  const visitArray = (array, parent) => {
-    return array.map((item, index) => visit(item, index, parent))
+  const visitArray = (array, nodeParent) => {
+    return array.map((item, index) => visit(item, index, nodeParent))
   }
 
   const visitChildren = (node) => {
@@ -69,6 +81,6 @@ export const renderMdast = (mdast, schema = {}, MissingNode = DefaultMissingNode
   }
 
   return Array.isArray(mdast)
-    ? visitArray(mdast, null)
-    : visit(mdast, 0, null)
+    ? visitArray(mdast, parent)
+    : visit(mdast, 0, parent)
 }

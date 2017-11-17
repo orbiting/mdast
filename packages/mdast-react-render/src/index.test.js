@@ -52,7 +52,7 @@ const schema = {
 test('render', assert => {
   assert.doesNotThrow(() => {
     shallow(
-      renderMdast(mdast, schema, false)
+      renderMdast(mdast, schema, {MissingNode: false})
     )
   })
 
