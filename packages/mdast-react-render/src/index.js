@@ -10,19 +10,20 @@ const DefaultMissingNode = ({node, children}) => (
 )
 
 export const renderMdast = (mdast, schema = {}, MissingNode = DefaultMissingNode) => {
-  const rules = schema.rules
+  const rules = schema.rules.filter(rule => rule.matchMdast && rule.component)
 
   const visit = (node, index, parent) => {
     if (node.type === 'text') {
       return node.value
     }
 
-    const rule = rules.find(r => r.matchMdast(node))
-    if (!rule || !rule.component) {
+    const rule = rules.find(r => r.matchMdast(node, index, parent))
+    if (!rule) {
       if (!MissingNode) {
         throw new Error([
-          `Missing Markdown node type "${node.type}"`,
-          node.identifier ? `with identifier "${node.identifier}"` : ''
+          `Missing Rule for Markdown node type "${node.type}"`,
+          node.identifier ? `with identifier "${node.identifier}"` : '',
+          'Note: A valid rules needs an renderMdast and component function'
         ].join(' '))
       }
       return (
