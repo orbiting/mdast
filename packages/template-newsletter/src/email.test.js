@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 test('render for email', assert => {
   assert.doesNotThrow(() => {
-    renderEmail(mdast, newsletterEmailSchema, false)
+    renderEmail(mdast, newsletterEmailSchema, {MissingNode: false})
   })
 
   assert.end()

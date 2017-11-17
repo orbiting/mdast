@@ -59,9 +59,11 @@ const paragraph = {
     },
     {
       matchMdast: matchType('link'),
-      getData: node => ({
-        title: node.title,
-        href: node.url
+      props: node => ({
+        data: {
+          title: node.title,
+          href: node.url
+        }
       }),
       component: Link,
       editorModule: 'link'
@@ -90,13 +92,15 @@ const schema = {
             'COVER'
           ),
           component: Cover,
-          getData: node => {
+          props: node => {
             const img =
               node.children[0]
                 .children[0]
             return {
-              alt: img.alt,
-              src: img.url
+              data: {
+                alt: img.alt,
+                src: img.url
+              }
             }
           },
           editorModule: 'cover',
@@ -183,9 +187,11 @@ const schema = {
                 {
                   matchMdast: matchImageParagraph,
                   component: Image,
-                  getData: node => ({
-                    src: node.children[0].url,
-                    alt: node.children[0].alt
+                  props: node => ({
+                    data: {
+                      src: node.children[0].url,
+                      alt: node.children[0].alt
+                    }
                   }),
                   editorModule: 'figureImage',
                   isVoid: true
@@ -193,7 +199,9 @@ const schema = {
                 {
                   matchMdast: matchParagraph,
                   component: Caption,
-                  getData: (node, parent) => (parent && parent.data) || {},
+                  props: (node, index, parent) => ({
+                    data: (parent && parent.data) || {}
+                  }),
                   editorModule: 'paragraph',
                   editorOptions: {
                     type: 'figureCaption',
@@ -214,9 +222,11 @@ const schema = {
             {
               matchMdast: matchType('list'),
               component: List,
-              getData: node => ({
-                ordered: node.ordered,
-                start: node.start
+              props: node => ({
+                data: {
+                  ordered: node.ordered,
+                  start: node.start
+                }
               }),
               editorModule: 'list',
               rules: [

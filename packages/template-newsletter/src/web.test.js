@@ -13,7 +13,7 @@ Enzyme.configure({ adapter: new Adapter() })
 test('render for web', assert => {
   assert.doesNotThrow(() => {
     shallow(
-      renderMdast(mdast, newsletterSchema, false)
+      renderMdast(mdast, newsletterSchema, {MissingNode: false})
     )
   })
 
@@ -23,7 +23,7 @@ test('render for web', assert => {
 test('render legacy cover for web', assert => {
   assert.doesNotThrow(() => {
     shallow(
-      renderMdast(mdastLegacy, newsletterSchema, false)
+      renderMdast(mdastLegacy, newsletterSchema, {MissingNode: false})
     )
   })
 
