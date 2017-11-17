@@ -36,7 +36,8 @@
     "semantic-release": "lerna-semantic-release pre && lerna-semantic-release post && lerna-semantic-release perform",
     "postinstall": "lerna bootstrap",
     "commitmsg": "validate-commit-msg",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "lerna": "lerna"
   },
   "author": "Thomas Preusse <t@preus.se> (https://t.preus.se/)"
 }
