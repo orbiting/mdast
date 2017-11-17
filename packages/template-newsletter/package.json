@@ -1,6 +1,6 @@
 {
   "name": "@project-r/template-newsletter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "a newsletter template",
   "main": "lib/index.js",
   "scripts": {
