@@ -268,7 +268,7 @@ class MarkdownSerializer {
       }
 
       let slateNode
-      const rule = this.rules.find(r => r.matchMdast && r.matchMdast(node))
+      const rule = this.rules.find(r => r.matchMdast && r.matchMdast(node, index, parent))
       if (!rule || !rule.fromMdast) {
         slateNode = onNoRule(node, context)
       } else {
