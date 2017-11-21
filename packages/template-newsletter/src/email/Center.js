@@ -38,8 +38,7 @@ export default ({children}) => (
                 </a>
               </p>
               <p>
-              Republik<br />
-              c/o Hotel Rothaus<br />
+              Republik AG<br />
               Sihlhallenstrasse 1<br />
               8004 Zürich<br />
               Schweiz</p>
