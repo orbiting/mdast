@@ -25,7 +25,9 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
     "babel-tape-runner": "^2.0.1",
+    "d3-format": "^1.2.1",
     "d3-time-format": "^2.1.0",
     "enzyme": "^3.1.1",
     "enzyme-adapter-react-16": "^1.0.4",
@@ -38,6 +40,7 @@
     "tape": "^4.8.0"
   },
   "peerDependencies": {
+    "d3-format": "^1.2.1",
     "d3-time-format": "^2.1.0",
     "glamor": "^2.20.40",
     "mdast-react-render": "^1.0.0",

@@ -18,6 +18,7 @@ import Figure, {
 import Blockquote from './Blockquote'
 import List, { ListItem } from './List'
 import RBlueprint from './RBlueprint'
+import RepublikShareholder from './RepublikShareholder'
 import Teaser from './Teaser'
 
 import {
@@ -241,6 +242,12 @@ const schema = {
             {
               matchMdast: matchZone('SPECIAL_R_BLUEPRINT'),
               component: RBlueprint,
+              isVoid: true,
+              editorModule: 'special'
+            },
+            {
+              matchMdast: matchZone('SPECIAL_REPUBLIK_SHAREHOLDER'),
+              component: RepublikShareholder,
               isVoid: true,
               editorModule: 'special'
             }

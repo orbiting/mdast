@@ -6,6 +6,7 @@ import { H2, H3 } from './Headlines'
 import Figure, { Image, Caption } from './Figure'
 import Blockquote from './Blockquote'
 import List, { ListItem } from './List'
+import RepublikShareholder from './RepublikShareholder'
 
 import {
   matchType,
@@ -143,6 +144,12 @@ const schema = {
                   rules: [paragraph]
                 }
               ]
+            },
+            {
+              matchMdast: matchZone('SPECIAL_REPUBLIK_SHAREHOLDER'),
+              component: RepublikShareholder,
+              isVoid: true,
+              editorModule: 'special'
             }
           ]
         }
