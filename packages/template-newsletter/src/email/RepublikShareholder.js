@@ -64,7 +64,7 @@ export default () => (
         <th style={styles.trTdTh}>Aktionärin</th>
         <th style={{...styles.trTdTh, ...styles.num}}>Anzahl</th>
         <th style={{...styles.trTdTh, ...styles.num}}>Stimmen</th>
-        <th style={{...styles.trTdTh, ...styles.num}}>Kaptial</th>
+        <th style={{...styles.trTdTh, ...styles.num}}>Kapital</th>
       </tr>
     </thead>
     <tbody>
