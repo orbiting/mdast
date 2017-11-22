@@ -28,7 +28,7 @@ export default ({children}) => (
             <td style={{padding: 20}}>
               <p>
                 <a href='https://www.republik.ch/'>
-                  <img height='79' src='https://gallery.mailchimp.com/650c1ec9003c7d8567eef4c5e/images/feb6bdde-83da-4211-bcf8-b09d3d3d012a.png' style={{
+                  <img height='79' src='https://assets.project-r.construction/images/logo_republik_newsletter.png' style={{
                     border: 0,
                     width: '180px !important',
                     height: '79px !important',
@@ -40,8 +40,7 @@ export default ({children}) => (
               <p>
               Republik AG<br />
               Sihlhallenstrasse 1<br />
-              8004 Zürich<br />
-              Schweiz</p>
+              8004 Zürich</p>
               <br />
               <p>
                 <a href='https://project-r.construction/'>
