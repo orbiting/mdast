@@ -21,12 +21,12 @@ Convert [Slate](https://github.com/ianstormtaylor/slate) trees to [MDAST](https:
 
 ### `instance.deserialize(markdown, options): Slate.Value`
 
-`markdown`: `String | Mdast`
+`markdown`: `String | Mdast`  
 `options`: `Object`
 
 ### `instance.deserialize(value, options): String | Mdast`
 
-`value`: `Slate.Value`
+`value`: `Slate.Value`  
 `options`: `Object`
 
 ### `instance.fromMdast(mdast, index = 0, parent = null, options)`
@@ -41,9 +41,9 @@ Convert [Slate](https://github.com/ianstormtaylor/slate) trees to [MDAST](https:
 
 ### Arbitrary Children
 
-Delegate children processing to the serializer.
+Delegate children processing back to the serializer.
 
-```
+```js
 {
   match: matchBlock(TYPE),
   matchMdast: (node) => node.type === 'heading' && node.depth === 1,
@@ -66,7 +66,7 @@ Delegate to a `childSerializer`. Another instance with just the rules you want.
 
 Make sure to forward parent information and rest (e.g. context) to the `childSerializer`. 
 
-```
+```js
 {
   match: matchBlock(TYPE),
   matchMdast: rule.matchMdast,
@@ -87,7 +87,7 @@ Make sure to forward parent information and rest (e.g. context) to the `childSer
 
 Skip processing children further.
 
-```
+```js
 {
   match: matchBlock(TYPE),
   matchMdast: (node) => node.type === 'image',
@@ -113,7 +113,7 @@ Skip processing children further.
 
 ## Example
 
-```
+```js
 const MarkdownSerializer = require('slate-mdast-serializer')
 const assert = require('assert')
 
