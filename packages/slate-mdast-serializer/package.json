@@ -1,6 +1,6 @@
 {
   "name": "slate-mdast-serializer",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "serialize slate to mdast and vice versa",
   "main": "lib/index.js",
   "scripts": {
