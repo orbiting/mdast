@@ -32,7 +32,7 @@
     "tape": "^4.8.0"
   },
   "peerDependencies": {
-    "slate": "^0.30.6"
+    "slate": ">=0.30.6"
   },
   "dependencies": {
     "js-yaml": "^3.10.0",

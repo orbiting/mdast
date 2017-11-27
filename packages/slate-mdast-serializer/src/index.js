@@ -11,7 +11,7 @@ import * as meta from './meta'
 const rootRule = {
   match: object => object.kind === 'document',
   matchMdast: node => node.type === 'root',
-  fromMdast: (node, index, parent, visitChildren) => ({
+  fromMdast: (node, index, parent, {visitChildren}) => ({
     document: {
       data: node.meta,
       kind: 'document',
@@ -19,7 +19,7 @@ const rootRule = {
     },
     kind: 'value'
   }),
-  toMdast: (object, index, parent, visitChildren) => ({
+  toMdast: (object, index, parent, {visitChildren}) => ({
     type: 'root',
     meta: object.data,
     children: visitChildren(object)
@@ -103,11 +103,14 @@ class MarkdownSerializer {
       })
     this.stringify = mdast => stringifier.stringify(stringifier.runSync(mdast))
   }
-  toMdast (rawNode, context = {}, onNoRule = (node, context, visitChildren) => {
-    context.missing = true
-    console.warn('Missing toMdast', node)
-    return visitChildren(node)
-  }) {
+  toMdast (rawNode, rootIndex = 0, rootParent = null, {
+    context = {},
+    onNoRule = (node, index, parent, {context, visitChildren}) => {
+      context.missing = true
+      console.warn('Missing toMdast', node)
+      return visitChildren(node)
+    }
+  } = {}) {
     const visitLeaves = (leaves, parent) => {
       if (!leaves.length) {
         return []
@@ -171,36 +174,44 @@ class MarkdownSerializer {
       }
       return visitArray(object.nodes, object)
     }
-    const visit = (object, index, parent, visitChildren) => {
+    const visit = (object, index, parent, visitChildren = defaultVisitChildren) => {
       const rule = this.rules.find(r => r.match && r.match(object))
       if (!rule || !rule.toMdast) {
-        return onNoRule(object, context, visitChildren || defaultVisitChildren)
+        return onNoRule(object, index, parent, {
+          context,
+          visitChildren
+        })
       }
       const mdastNode = rule.toMdast(
         object, index, parent,
-        visitChildren || defaultVisitChildren,
-        context
+        {
+          visitChildren,
+          context
+        }
       )
 
       return mdastNode
     }
 
     return Array.isArray(rawNode)
-      ? visitArray(rawNode, null)
-      : visit(rawNode, 0, null)
+      ? visitArray(rawNode, rootParent)
+      : visit(rawNode, rootIndex, rootParent)
   }
   serialize (value, options = {}) {
     const raw = value.document.toJSON()
-    const mdast = this.toMdast(raw, options.context)
+    const mdast = this.toMdast(raw, 0, null, options)
     return options.mdast
       ? mdast
       : this.stringify(mdast)
   }
-  fromMdast (mdast, context = {}, onNoRule = (node, context) => {
-    context.missing = true
-    console.warn('Missing fromMdast', node)
-    return []
-  }) {
+  fromMdast (mdast, rootIndex = 0, rootParent = null, {
+    context = {},
+    onNoRule = (node, index, parent, {context}) => {
+      context.missing = true
+      console.warn('Missing fromMdast', node)
+      return []
+    }
+  } = {}) {
     const compactText = (nodes) => {
       return nodes.reduce(
         (compact, node) => {
@@ -270,12 +281,14 @@ class MarkdownSerializer {
       let slateNode
       const rule = this.rules.find(r => r.matchMdast && r.matchMdast(node, index, parent))
       if (!rule || !rule.fromMdast) {
-        slateNode = onNoRule(node, context)
+        slateNode = onNoRule(node, index, parent, {visitChildren, context})
       } else {
         slateNode = rule.fromMdast(
           node, index, parent,
-          visitChildren,
-          context
+          {
+            visitChildren,
+            context
+          }
         )
       }
 
@@ -286,15 +299,17 @@ class MarkdownSerializer {
     }
 
     return Array.isArray(mdast)
-      ? visitArray(mdast, null)
-      : visit(mdast, 0, null)
+      ? visitArray(mdast, rootParent)
+      : visit(mdast, rootIndex, rootParent)
   }
   deserialize (data, options = {}) {
     return Value.fromJSON(this.fromMdast(
       options.mdast
         ? data
         : this.parse(data),
-      options.context
+      0,
+      null,
+      options
     ))
   }
 }

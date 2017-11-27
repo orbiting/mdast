@@ -6,12 +6,12 @@ const serializer = new MarkdownSerializer({
     {
       match: object => object.kind === 'block',
       matchMdast: (node) => node.type === 'heading' && node.depth === 1,
-      fromMdast: (node, index, parent, visitChildren) => ({
+      fromMdast: (node, index, parent, {visitChildren}) => ({
         kind: 'block',
         type: 'title',
         nodes: visitChildren(node)
       }),
-      toMdast: (object, index, parent, visitChildren) => ({
+      toMdast: (object, index, parent, {visitChildren}) => ({
         type: 'heading',
         depth: 1,
         children: visitChildren(object)

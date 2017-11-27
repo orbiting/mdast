@@ -8,13 +8,13 @@ const serializer = new MarkdownSerializer({
     {
       match: object => object.kind === 'block',
       matchMdast: (node) => node.type === 'zone',
-      fromMdast: (node, index, parent, visitChildren) => ({
+      fromMdast: (node, index, parent, {visitChildren}) => ({
         kind: 'block',
         type: node.identifier,
         data: node.data,
         nodes: visitChildren(node)
       }),
-      toMdast: (object, index, parent, visitChildren) => ({
+      toMdast: (object, index, parent, {visitChildren}) => ({
         type: 'zone',
         identifier: object.type,
         data: object.data,
