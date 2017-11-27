@@ -54,7 +54,7 @@ Delegate children processing back to the serializer.
   }),
   toMdast: (object, index, parent, {visitChildren}) => ({
     type: 'heading',
-    depth,
+    depth: 1,
     children: visitChildren(object)
   })
 }
@@ -112,6 +112,8 @@ Skip processing children further.
 ```
 
 ## Example
+
+[Try it in your browser.](https://runkit.com/tpreusse/slate-mdast-serializer)
 
 ```js
 const MarkdownSerializer = require('slate-mdast-serializer')
