@@ -32,10 +32,10 @@ const styles = {
   })
 }
 
-export const Image = ({ data, attributes = {} }) =>
+export const Image = ({ src, alt, attributes = {} }) =>
   <img {...styles.image}
-    src={imageResizeUrl(data.src, '1200x')}
-    alt={data.alt}
+    src={imageResizeUrl(src, '1200x')}
+    alt={alt}
     {...attributes}
   />
 

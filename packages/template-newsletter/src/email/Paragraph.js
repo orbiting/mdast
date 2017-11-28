@@ -3,10 +3,10 @@ import React from 'react'
 export const Br = () => <br />
 export const Strong = ({ children }) => <strong>{ children }</strong>
 export const Em = ({ children }) => <em>{ children }</em>
-export const Link = ({ children, data }) => (
+export const Link = ({ children, href, title }) => (
   <a
-    href={data.href}
-    title={data.title}>
+    href={href}
+    title={title}>
     { children }
   </a>
 )

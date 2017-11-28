@@ -61,10 +61,8 @@ const paragraph = {
     {
       matchMdast: matchType('link'),
       props: node => ({
-        data: {
-          title: node.title,
-          href: node.url
-        }
+        title: node.title,
+        href: node.url
       }),
       component: Link,
       editorModule: 'link'
@@ -189,10 +187,8 @@ const schema = {
                   matchMdast: matchImageParagraph,
                   component: Image,
                   props: node => ({
-                    data: {
-                      src: node.children[0].url,
-                      alt: node.children[0].alt
-                    }
+                    src: node.children[0].url,
+                    alt: node.children[0].alt
                   }),
                   editorModule: 'figureImage',
                   isVoid: true

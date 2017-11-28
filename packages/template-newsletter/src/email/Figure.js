@@ -2,7 +2,7 @@ import React from 'react'
 
 import { imageResizeUrl } from 'mdast-react-render/lib/utils'
 
-export const Image = ({ data }) =>
+export const Image = ({ src, alt }) =>
   <img key='image'
     style={{
       border: '0px',
@@ -12,8 +12,8 @@ export const Image = ({ data }) =>
       maxWidth: '100% !important'
     }}
     width='640'
-    src={imageResizeUrl(data.src, '600x')}
-    alt={data.alt}
+    src={imageResizeUrl(src, '600x')}
+    alt={alt}
   />
 
 export const Caption = ({ children, data }) => (

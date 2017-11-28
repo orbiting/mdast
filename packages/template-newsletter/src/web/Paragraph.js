@@ -23,10 +23,10 @@ export const Strong = ({ children, attributes = {} }) =>
   <strong {...attributes}>{ children }</strong>
 export const Em = ({ children, attributes = {} }) =>
   <em {...attributes}>{ children }</em>
-export const Link = ({ children, data, attributes = {} }) => (
+export const Link = ({ children, href, title, attributes = {} }) => (
   <a {...css(styles.link)}
-    href={data.href}
-    title={data.title}
+    href={href}
+    title={title}
     {...attributes}>
     { children }
   </a>
