@@ -144,8 +144,7 @@ const schema = {
             {
               matchMdast: matchZone('SPECIAL_REPUBLIK_SHAREHOLDER'),
               component: RepublikShareholder,
-              isVoid: true,
-              editorModule: 'special'
+              isVoid: true
             }
           ]
         }

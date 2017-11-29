@@ -178,9 +178,20 @@ const schema = {
             {
               matchMdast: matchZone('FIGURE'),
               component: Figure,
+              props: node => ({
+                float: node.data.float
+              }),
               editorModule: 'figure',
               editorOptions: {
-                afterType: 'PARAGRAPH'
+                afterType: 'PARAGRAPH',
+                pixelNote: 'Anzeigegrössen: 1200x und 600x (proportionaler Schnitt)',
+                insertButtonText: 'Bild',
+                captionRight: true,
+                sizes: [
+                  {label: 'Gross', props: {float: undefined}},
+                  {label: 'Left', props: {float: 'left'}},
+                  {label: 'Right', props: {float: 'right'}},
+                ]
               },
               rules: [
                 {

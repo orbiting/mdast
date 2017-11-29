@@ -40,7 +40,7 @@ export const Image = ({ src, alt, attributes = {} }) =>
   />
 
 export const Caption = ({ children, data, attributes = {} }) => (
-  <figcaption style={{
+  <figcaption {...attributes} style={{
     textAlign: data.captionRight
       ? 'right'
       : 'left',
@@ -48,17 +48,17 @@ export const Caption = ({ children, data, attributes = {} }) => (
     fontFamily: 'sans-serif',
     margin: 0,
     position: 'relative'
-  }} {...attributes}>
+  }}>
     {children}
   </figcaption>
 )
 
-export default ({ children, data, attributes = {} }) => {
+export default ({ children, float, attributes = {} }) => {
   return (
     <figure {...merge(
     styles.figure,
-    data.float === 'left' && styles.floatLeft,
-    data.float === 'right' && styles.floatRight
+    float === 'left' && styles.floatLeft,
+    float === 'right' && styles.floatRight
   )} {...attributes}>
       {children}
     </figure>
