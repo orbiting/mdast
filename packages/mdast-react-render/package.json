@@ -2,6 +2,9 @@
   "name": "mdast-react-render",
   "version": "1.0.0",
   "description": "render mdast nodes according to a schema",
+  "keywords": [
+    "mdast", "react", "render", "markdown", "md", "schema", "email"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "npm run prebuild && npm run build",
