@@ -78,7 +78,7 @@ const schema = {
 test('render email', assert => {
   let emailHtml
   assert.doesNotThrow(() => {
-    emailHtml = renderEmail(mdast, schema, false)
+    emailHtml = renderEmail(mdast, schema, {MissingNode: false})
   })
 
   assert.notEqual(

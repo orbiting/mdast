@@ -6,7 +6,7 @@ Convert [Slate](https://github.com/ianstormtaylor/slate) trees to [MDAST](https:
 
 ### `rule` object
 
-```
+```js
 {
   match: fn(slateJson): Boolean,
   matchMdast: fn(mdast, index, parent): Boolean,

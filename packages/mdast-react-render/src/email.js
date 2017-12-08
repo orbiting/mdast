@@ -8,19 +8,22 @@ export const Mso = ({children, gte}) =>
     __html: children
   }} />
 
-const DOCTYPE = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
+const DEFAULT_DOCTYPE = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
 
-export const renderEmail = (mdast, schema = {}) => (
-  DOCTYPE +
-  ReactDOMServer.renderToStaticMarkup(
-    renderMdast(mdast, schema)
-  )
-    .split('<mso>')
-    .join('<!--[if mso]>')
-    .replace(
-      /<mso data-gte="([^""]+)">/,
-      (match, gte) => `<!--[if gte mso ${gte}]>`
+export const renderEmail = (mdast, schema, options) => {
+  const { doctype = DEFAULT_DOCTYPE } = options
+  return (
+    doctype +
+    ReactDOMServer.renderToStaticMarkup(
+      renderMdast(mdast, schema, options)
     )
-    .split('</mso>')
-    .join('<![endif]-->')
-)
+      .split('<mso>')
+      .join('<!--[if mso]>')
+      .replace(
+        /<mso data-gte="([^""]+)">/,
+        (match, gte) => `<!--[if gte mso ${gte}]>`
+      )
+      .split('</mso>')
+      .join('<![endif]-->')
+  )
+}

@@ -9,7 +9,7 @@ const DefaultMissingNode = ({node, children}) => (
   </span>
 )
 
-export const renderMdast = (mdast, schema = {}, options = {}) => {
+export const renderMdast = (mdast, schema, options = {}) => {
   const {parent = null, MissingNode = DefaultMissingNode} = options
 
   const rules = schema.rules.filter(rule => rule.matchMdast && rule.component)
