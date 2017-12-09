@@ -29,7 +29,6 @@ const mdast = {
   ]
 }
 
-
 const schema = {
   rules: [
     {

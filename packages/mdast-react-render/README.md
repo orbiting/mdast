@@ -9,12 +9,23 @@ A util to render an [MDAST](https://github.com/syntax-tree/mdast) tree accroding
 ```js
 {
   matchMdast: fn(mdast, index, parent): Boolean,
-  props: fn(mdast, index, parent): Object,
+  props: fn(mdast, index, parent, {ancestors}): Object,
   rules: [rule],
   isVoid: Boolean,
   component: ReactComponent
 }
 ```
+
+- `matchMdast`
+  Return true if the rule should render the mdast node.
+- `props`
+  Extract props from mdast to be passed to `component`. Additional context is available from the ordered `ancestors` array—index zero is equal to the parent.
+- `rules`
+  Optional array of sub rules to render children with. Defaults to recursively visit children.
+- `isVoid`
+  Skip rendering children. Default `false`.
+- `component`
+  The React component to render.
 
 ### `renderMdast`
 
@@ -33,8 +44,8 @@ Rules to render with
 `options.MissingNode`: `false | ReactComponent`  
 A component to display when no rules matches. You can also pass false to throw if there is an unhandled mdast node.
 
-`options.parent`: `undefined | Mdast`  
-If you're rendering a sub tree you can pass the parent used for `matchMdast` and `props` via options.
+`options.ancestors`: `undefined | [Mdast]`  
+If you're rendering a sub tree you should pass the ancestors via options. The immediate parent is expected at index 0. Used for `matchMdast` (immediate parent) and `props` (parent and ancestors).
 
 ### `renderEmail`
 

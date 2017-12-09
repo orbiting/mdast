@@ -10,16 +10,20 @@ const DefaultMissingNode = ({node, children}) => (
 )
 
 export const renderMdast = (mdast, schema, options = {}) => {
-  const {parent = null, MissingNode = DefaultMissingNode} = options
+  const {
+    ancestors = [],
+    MissingNode = DefaultMissingNode
+  } = options
 
   const rules = schema.rules.filter(rule => rule.matchMdast && rule.component)
 
-  const visit = (node, index, nodeParent) => {
+  const visit = (node, index, nodeAncestors) => {
     if (node.type === 'text') {
       return node.value
     }
+    const parent = nodeAncestors[0]
 
-    const rule = rules.find(r => r.matchMdast(node, index, nodeParent))
+    const rule = rules.find(r => r.matchMdast(node, index, parent))
     if (!rule) {
       if (!MissingNode) {
         throw new Error([
@@ -30,7 +34,7 @@ export const renderMdast = (mdast, schema, options = {}) => {
       }
       return (
         <MissingNode key={index} node={node}>
-          {visitChildren(node)}
+          {visitChildren(node, nodeAncestors)}
         </MissingNode>
       )
     }
@@ -39,7 +43,9 @@ export const renderMdast = (mdast, schema, options = {}) => {
 
     let props
     if (rule.props) {
-      props = rule.props(node, index, nodeParent)
+      props = rule.props(node, index, parent, {
+        ancestors: nodeAncestors
+      })
     } else {
       props = {
         data: node.data
@@ -55,11 +61,11 @@ export const renderMdast = (mdast, schema, options = {}) => {
         },
         {
           ...options,
-          parent: node
+          ancestors: [node].concat(nodeAncestors)
         }
       )
     } else if (!rule.isVoid) {
-      children = visitChildren(node)
+      children = visitChildren(node, nodeAncestors)
     }
 
     return (
@@ -69,18 +75,18 @@ export const renderMdast = (mdast, schema, options = {}) => {
     )
   }
 
-  const visitArray = (array, nodeParent) => {
-    return array.map((item, index) => visit(item, index, nodeParent))
+  const visitArray = (array, nodeAncestors) => {
+    return array.map((item, index) => visit(item, index, nodeAncestors))
   }
 
-  const visitChildren = (node) => {
+  const visitChildren = (node, nodeAncestors) => {
     if (!node.children || node.children.length === 0) {
       return null
     }
-    return visitArray(node.children, node)
+    return visitArray(node.children, [node].concat(nodeAncestors))
   }
 
   return Array.isArray(mdast)
-    ? visitArray(mdast, parent)
-    : visit(mdast, 0, parent)
+    ? visitArray(mdast, ancestors)
+    : visit(mdast, 0, ancestors)
 }
