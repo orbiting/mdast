@@ -1,6 +1,6 @@
 {
   "name": "@orbiting/remark-preset",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "a preconfigured mdast processor with zones and meta data",
   "keywords": [
     "remark",
