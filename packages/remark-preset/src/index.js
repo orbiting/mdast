@@ -6,40 +6,7 @@ import frontmatter from 'remark-frontmatter'
 import * as zone from './zone'
 import * as meta from './meta'
 import * as span from './span'
-
-const collapseTag = tag => zone.collapse({
-  test: ({type, value}) => {
-    if (type !== 'html') {
-      return
-    }
-    if (value === `<${tag}>`) {
-      return 'start'
-    }
-    if (value === `</${tag}>`) {
-      return 'end'
-    }
-  },
-  mutate: (start, nodes, end) => {
-    return {
-      type: tag,
-      children: nodes
-    }
-  }
-})
-const expandTag = tag => zone.expand({
-  test: ({type}) => type === tag,
-  mutate: node => [
-    {
-      type: 'html',
-      value: `<${tag}>`
-    },
-    ...node.children,
-    {
-      type: 'html',
-      value: `</${tag}>`
-    }
-  ]
-})
+import * as tag from './tag'
 
 const parser = unified()
   .use(remarkParse, {
@@ -78,8 +45,8 @@ const parser = unified()
       }
     }
   }))
-  .use(collapseTag('sub'))
-  .use(collapseTag('sup'))
+  .use(tag.collapse('sub'))
+  .use(tag.collapse('sup'))
   .use(span.collapse)
 
 export const parse = md => parser.runSync(parser.parse(md))
@@ -113,8 +80,8 @@ const stringifier = unified()
       ].filter(Boolean)
     }
   }))
-  .use(expandTag('sub'))
-  .use(expandTag('sup'))
+  .use(tag.expand('sub'))
+  .use(tag.expand('sup'))
   .use(span.expand)
 
 export const stringify = mdast =>

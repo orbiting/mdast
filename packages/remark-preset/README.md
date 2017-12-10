@@ -144,6 +144,7 @@ import frontmatter from 'remark-frontmatter'
 
 import * as meta from '@orbiting/remark-preset/lib/meta'
 import * as zone from '@orbiting/remark-preset/lib/zone'
+import * as tag from '@orbiting/remark-preset/lib/tag'
 import * as span from '@orbiting/remark-preset/lib/span'
 
 unified()
@@ -165,6 +166,7 @@ unified()
     }
   }))
   .use(span.collapse)
+  .use(tag.collapse('sub'))
 
 const stringifier = unified()
   .use(remarkStringify, {
@@ -190,4 +192,5 @@ const stringifier = unified()
     }
   }))
   .use(span.expand)
+  .use(tag.expand('sub'))
 ```
