@@ -1,7 +1,6 @@
-const test = require('tape')
-const MarkdownSerializer = require('./')
-
-const TYPE = 'Z'
+import test from 'tape'
+import MarkdownSerializer from './'
+import { parse, stringify } from '@orbiting/remark-preset'
 
 const serializer = new MarkdownSerializer({
   rules: [
@@ -25,18 +24,18 @@ const serializer = new MarkdownSerializer({
 })
 
 test('zone serialization', assert => {
-  const md = `<section><h6>${TYPE}</h6>
+  const md = `<section><h6>Z</h6>
 
 
 
 <hr /></section>\n`
-  const state = serializer.deserialize(md)
+  const state = serializer.deserialize(parse(md))
   const node = state.document.nodes.first()
 
   assert.equal(node.kind, 'block')
-  assert.equal(node.type, TYPE)
+  assert.equal(node.type, 'Z')
 
-  assert.equal(serializer.serialize(state), md)
+  assert.equal(stringify(serializer.serialize(state)), md)
 
   assert.end()
 })
@@ -53,7 +52,7 @@ test('zone data serialization', assert => {
 
 
 <hr /></section>\n`
-  const state = serializer.deserialize(md)
+  const state = serializer.deserialize(parse(md))
   const node = state.document.nodes.first()
 
   assert.equal(node.kind, 'block')
@@ -61,7 +60,7 @@ test('zone data serialization', assert => {
 
   assert.equal(node.data.get('KEY'), 'VALUE')
 
-  assert.equal(serializer.serialize(state), md)
+  assert.equal(stringify(serializer.serialize(state)), md)
 
   assert.end()
 })
@@ -76,7 +75,7 @@ test('nested zone serialization', assert => {
 <hr /></section>
 
 <hr /></section>\n`
-  const state = serializer.deserialize(md)
+  const state = serializer.deserialize(parse(md))
   const node = state.document.nodes.first()
 
   assert.equal(node.kind, 'block')
@@ -87,7 +86,7 @@ test('nested zone serialization', assert => {
   assert.equal(zoneB.kind, 'block')
   assert.equal(zoneB.type, 'AB')
 
-  assert.equal(serializer.serialize(state), md)
+  assert.equal(stringify(serializer.serialize(state)), md)
 
   assert.end()
 })
@@ -104,7 +103,7 @@ test('sequential zone serialization', assert => {
 
 
 <hr /></section>\n`
-  const state = serializer.deserialize(md)
+  const state = serializer.deserialize(parse(md))
   const zoneA = state.document.nodes.first()
 
   assert.equal(zoneA.kind, 'block')
@@ -115,7 +114,7 @@ test('sequential zone serialization', assert => {
   assert.equal(zoneB.kind, 'block')
   assert.equal(zoneB.type, 'B')
 
-  assert.equal(serializer.serialize(state), md)
+  assert.equal(stringify(serializer.serialize(state)), md)
 
   assert.end()
 })
@@ -152,7 +151,7 @@ test('sequential and nested zone serialization', assert => {
 <hr /></section>
 
 <hr /></section>\n`
-  const state = serializer.deserialize(md)
+  const state = serializer.deserialize(parse(md))
   const zoneA = state.document.nodes.first()
 
   assert.equal(zoneA.kind, 'block')
@@ -183,7 +182,7 @@ test('sequential and nested zone serialization', assert => {
   assert.equal(zoneBB.kind, 'block')
   assert.equal(zoneBB.type, 'BB')
 
-  assert.equal(serializer.serialize(state), md)
+  assert.equal(stringify(serializer.serialize(state)), md)
 
   assert.end()
 })

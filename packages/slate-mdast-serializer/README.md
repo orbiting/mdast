@@ -2,6 +2,8 @@
 
 Convert [Slate](https://github.com/ianstormtaylor/slate) trees to [MDAST](https://github.com/syntax-tree/mdast) trees.
 
+See [`@orbiting/remark-preset`](../remark-preset) for a good preset to parse markdown and stringify mdast to markdown.
+
 ## API
 
 ### `rule` object
@@ -15,16 +17,27 @@ Convert [Slate](https://github.com/ianstormtaylor/slate) trees to [MDAST](https:
 }
 ```
 
+- `match`
+  Return true if the rule should serialize the slate object.
+- `matchMdast`
+  Return true if the rule should deserialize the mdast node.
+- `fromMdast`
+  Return slate objects for a given mdast node.
+- `toMdast`
+  Return mdast nodes for a given slate object.
+
+See [most common rules](#most-common-rules) below.
+
 ### `constructor(options): instance`
 
 `options.rules` array of rule objects
 
-### `instance.deserialize(markdown, options): Slate.Value`
+### `instance.deserialize(mdast, options): Slate.Value`
 
-`markdown`: `String | Mdast`  
+`mdast`: `Mdast`  
 `options`: `Object`
 
-### `instance.deserialize(value, options): String | Mdast`
+### `instance.deserialize(value, options): Mdast`
 
 `value`: `Slate.Value`  
 `options`: `Object`
@@ -117,6 +130,7 @@ Skip processing children further.
 
 ```js
 const MarkdownSerializer = require('slate-mdast-serializer')
+const { parse, stringify } = require('@orbiting/remark-preset')
 const assert = require('assert')
 
 const paragraph = {
@@ -153,9 +167,9 @@ const serializer = new MarkdownSerializer({
   ]
 })
 
-const md = 'Hello **World**'
+const md = 'Hello **World**\n'
 
-const value = serializer.deserialize(md)
+const value = serializer.deserialize(parse(md))
 const node = value.document.nodes.first()
 
 assert.equal(node.kind, 'block')
@@ -174,5 +188,5 @@ const worldMarks = value.change().select({
 assert.equal(worldMarks.size, 1)
 assert.equal(worldMarks.first().type, 'BOLD')
 
-assert.equal(serializer.serialize(value).trimRight(), md)
+assert.equal(stringify(serializer.serialize(value)), md)
 ```

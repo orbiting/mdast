@@ -8,7 +8,7 @@ The first challange was to convert a Slate tree to an mdast tree.
 
 [`slate-mdast-serializer`](./packages/slate-mdast-serializer) takes care of that with customizable rules.
 
-The API is inspired by `slate-html-serializer`—`deserialize` and `serialize` are available to convert between Slate `Value` and markdown `String`. Additionally `fromMdast` and `toMdast` is available to convert any Slate json to mdast nodes.
+The API is inspired by `slate-html-serializer`—`deserialize` and `serialize` are available to convert between Slate `Value` and a mdast tree. Additionally `fromMdast` and `toMdast` is available to convert any Slate json to mdast nodes.
 
 ```js
 import MarkdownSerializer from 'slate-mdast-serializer'

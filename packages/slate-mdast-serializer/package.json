@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "serialize slate to mdast and vice versa",
   "keywords": [
-    "slate", "mdast", "serializer", "markdown", "md", "serialization", "schema"
+    "slate",
+    "mdast",
+    "serializer",
+    "markdown",
+    "md",
+    "serialization",
+    "schema"
   ],
   "main": "lib/index.js",
   "scripts": {
@@ -23,8 +29,9 @@
   "bugs": {
     "url": "https://github.com/orbiting/mdast/issues"
   },
-  "homepage": "https://github.com/orbiting/mdast#readme",
+  "homepage": "https://github.com/orbiting/mdast/tree/master/packages/slate-mdast-serializer#readme",
   "devDependencies": {
+    "@orbiting/remark-preset": "^1.0.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-tape-runner": "^2.0.1",
@@ -38,11 +45,6 @@
     "slate": ">=0.30.6"
   },
   "dependencies": {
-    "js-yaml": "^3.10.0",
-    "lodash.isequal": "^4.5.0",
-    "remark-frontmatter": "^1.1.0",
-    "remark-parse": "^4.0.0",
-    "remark-stringify": "^4.0.0",
-    "unified": "^6.1.5"
+    "lodash.isequal": "^4.5.0"
   }
 }
