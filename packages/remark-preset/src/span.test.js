@@ -51,6 +51,7 @@ test('span data is string only', assert => {
     () => {
       stringify(rootNode)
     },
+    /mdast span/,
     'Prevents you from serializing non string data'
   )
 

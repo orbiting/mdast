@@ -39,7 +39,7 @@ export const expand = zone.expand({
       type: 'html',
       value: `<span${node.data
         ? ' ' + Object.keys(node.data).map(key => {
-          if (typeof key !== 'string') {
+          if (typeof node.data[key] !== 'string') {
             throw new Error('mdast span: only stings are supported, you may use JSON.stringify')
           }
           return `data-${encodeEntities(key)}="${encodeEntities(node.data[key])}"`
