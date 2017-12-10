@@ -2,6 +2,13 @@
 
 This repository contains utilities we've used to combine [mdast](https://github.com/syntax-tree/mdast) and [Slate](https://github.com/ianstormtaylor/slate) in our CMS—[Publikator](https://github.com/orbiting/publikator-frontend).
 
+Packages in this repo, all available on NPM:
+
+- [`slate-mdast-serializer`](./packages/slate-mdast-serializer)
+- [`mdast-react-render`](./packages/mdast-react-render)
+- [`@orbiting/remark-preset`](./packages/remark-preset)
+- [`@project-r/template-newsletter`](#example-template)
+
 ## Serializer
 
 The first challange was to convert a Slate tree to an mdast tree.
@@ -22,13 +29,13 @@ new MarkdownSerializer({
 ```
 
 - [Try it in your browser](https://runkit.com/tpreusse/slate-mdast-serializer)
-- [Readme with API docs](./packages/slate-mdast-serializer) 
+- [Readme with API docs](./packages/slate-mdast-serializer)
 
 ## Remark Preset
 
-Preconfigured [remark](https://github.com/remarkjs/remark) with plugins for `zone`, `sub` and `sup` types and yaml meta data.
+Preconfigured [remark](https://github.com/remarkjs/remark) with plugins for `zone`, `sub`, `sup` and `span` types and yaml meta data.
 
-Use this on your server if you want to persist mdast tree as strings—markdown files. In your editor to import and export markdown. Or as a helper in your test to skip writing mdast trees by hand.
+Use this on your server if you want to persist mdast tree as strings—markdown files. In your editor to import and export markdown. Or as a helper in your tests to skip writing mdast trees by hand.
 
 ```js
 import { parse, stringify } from '@orbiting/remark-preset'
@@ -39,7 +46,7 @@ const mdast = parse(md)
 md === stringify(mdast)
 ```
 
-- [Readme with API docs](./packages/remark-preset) 
+- [Readme with API docs](./packages/remark-preset)
 
 ## Renderer
 
@@ -62,13 +69,13 @@ renderMdast(mdast, schema)
 ```
 
 - [Try it in your browser](https://runkit.com/tpreusse/mdast-react-render)
-- [Readme with API docs](./packages/mdast-react-render) 
+- [Readme with API docs](./packages/mdast-react-render)
 
 ## Example Template
 
-This isn't meant for usage but for understanding how you might use above utils and [Publikator](https://github.com/orbiting/publikator-frontend).
+This isn't meant for direct usage but for understanding how you might use above utils, [Publikator](https://github.com/orbiting/publikator-frontend) and a starting point for your own templates.
 
-In `packages/template-newsletter` you'll find newsletter template schema of [Project R](https://project-r.construction/) that can render to web and email. It also contains `editor` information and can be initiated with our [CMS](https://github.com/orbiting/publikator-frontend) to author newsletters according to the schema.
+In `packages/template-newsletter` you'll find the newsletter template schema of [Project R](https://project-r.construction/) that can render to web and email. It also contains `editor` information and can be initiated with our [CMS](https://github.com/orbiting/publikator-frontend) to author newsletters according to the schema.
 
-- [Web schema](./packages/template-newsletter/src/web/index.js) 
-- [Email schema](./packages/template-newsletter/src/email/index.js) 
+- [Web schema](./packages/template-newsletter/src/web/index.js)
+- [Email schema](./packages/template-newsletter/src/email/index.js)
