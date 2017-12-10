@@ -24,6 +24,23 @@ new MarkdownSerializer({
 - [Try it in your browser](https://runkit.com/tpreusse/slate-mdast-serializer)
 - [Readme with API docs](./packages/slate-mdast-serializer) 
 
+## Remark Preset
+
+Preconfigured [remark](https://github.com/remarkjs/remark) with plugins for a custom `zone` type and yaml meta data.
+
+Use this on your server if you want to persist mdast tree as strings—markdown files. In your editor to import and export markdown. Or as a helper in your test to skip writing mdast trees by hand.
+
+```js
+import { parse, stringify } from '@orbiting/remark-preset'
+
+const md = 'Hello **World**\n'
+const mdast = parse(md)
+
+md === stringify(mdast)
+```
+
+- [Readme with API docs](./packages/remark-preset) 
+
 ## Renderer
 
 Your front ends shouldn't load Slate or `remark` (the mdast processor) for just displaying content. Send you front end an mdast tree (as json) and let it be rendered with `react` and this under hundred-lines-of-code-long util.
