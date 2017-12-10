@@ -6,6 +6,40 @@ import frontmatter from 'remark-frontmatter'
 import * as zone from './zone'
 import * as meta from './meta'
 
+const collapseTag = tag => zone.collapse({
+  test: ({type, value}) => {
+    if (type !== 'html') {
+      return
+    }
+    if (value === `<${tag}>`) {
+      return 'start'
+    }
+    if (value === `</${tag}>`) {
+      return 'end'
+    }
+  },
+  mutate: (start, nodes, end) => {
+    return {
+      type: tag,
+      children: nodes
+    }
+  }
+})
+const expandTag = tag => zone.expand({
+  test: ({type}) => type === tag,
+  mutate: node => [
+    {
+      type: 'html',
+      value: `<${tag}>`
+    },
+    ...node.children,
+    {
+      type: 'html',
+      value: `</${tag}>`
+    }
+  ]
+})
+
 const parser = unified()
   .use(remarkParse, {
     commonmark: true,
@@ -13,7 +47,7 @@ const parser = unified()
   })
   .use(frontmatter, ['yaml'])
   .use(meta.parse)
-  .use(zone.collapse, {
+  .use(zone.collapse({
     test: ({type, value}) => {
       if (type !== 'html') {
         return
@@ -42,7 +76,9 @@ const parser = unified()
           : nodes
       }
     }
-  })
+  }))
+  .use(collapseTag('sub'))
+  .use(collapseTag('sup'))
 
 export const parse = md => parser.runSync(parser.parse(md))
 
@@ -53,7 +89,7 @@ const stringifier = unified()
   })
   .use(frontmatter, ['yaml'])
   .use(meta.format)
-  .use(zone.expand, {
+  .use(zone.expand({
     test: ({type}) => type === 'zone',
     mutate: (node) => {
       const data = JSON.stringify(node.data || {}, null, 2)
@@ -74,6 +110,8 @@ const stringifier = unified()
         }
       ].filter(Boolean)
     }
-  })
+  }))
+  .use(expandTag('sub'))
+  .use(expandTag('sup'))
 export const stringify = mdast =>
   stringifier.stringify(stringifier.runSync(mdast))

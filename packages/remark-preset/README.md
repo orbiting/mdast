@@ -2,36 +2,6 @@
 
 Preconfigured [remark](https://github.com/remarkjs/remark) for our projects.
 
-## Features
-
-### Custom Mdast Type `zone`
-
-```js
-{
-  type: 'zone',
-  identfier: 'IDENTIFIER',
-  children: [{type: 'paragraph', children: [
-    {type: 'text', value: 'Group arbitrary markdown'}
-  ]}]
-}
-```
-
-becomes
-
-```html
-<section><h6>IDENTIFIER</h6>
-
-Group arbitrary markdown
-
-<hr /></section>
-```
-
-Zones can be nested and can have data (stringified as json in a code node). Under the hood the zone type is expanded and collapsed into flat nodes wrapped by `html` nodes with the section markup.
-
-### Meta Data
-
-Yaml meta data on `root.meta`. Powered by `js-yaml` and `remark-frontmatter`.
-
 ## API
 
 ### `parse`
@@ -60,6 +30,79 @@ The mdast tree to stringify.
 
 Returns a markdown string.
 
+## Features
+
+### Custom Mdast Type `zone`
+
+```html
+<section><h6>IDENTIFIER</h6>
+
+Group arbitrary markdown
+
+<hr /></section>
+```
+
+Yields following AST:
+
+```js
+{
+  type: 'zone',
+  identfier: 'IDENTIFIER',
+  children: [{type: 'paragraph', children: [
+    {type: 'text', value: 'Group arbitrary markdown'}
+  ]}]
+}
+```
+
+Zones can be nested and can have data (stringified as json in a code node). Under the hood the zone type is expanded and collapsed into flat nodes wrapped by `html` nodes with the section markup.
+
+### `sub` and `sup` Types
+
+```html
+# CO<sub>2</sub>
+
+40 µg/m<sup>3</sup>
+```
+
+Yields following AST:
+
+```js
+{
+  type: 'root',
+  children: [
+    {
+      type: 'heading',
+      depth: 1,
+      children: [
+        {type: 'text', value: 'CO'},
+        {
+          type: 'sub',
+          children: [
+            {type: 'text', value: '2'}
+          ]
+        }
+      ]
+    },
+    {
+      type: 'paragraph',
+      children: [
+        {type: 'text', value: '40 µg/m'},
+        {
+          type: 'sup',
+          children: [
+            {type: 'text', value: '3'}
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Meta Data
+
+Yaml meta data on `root.meta`. Powered by `js-yaml` and `remark-frontmatter`.
+
 ## Utils
 
 If want only want the features and configure the unified processors yourself, you can import them individually:
@@ -79,7 +122,7 @@ unified()
   })
   .use(frontmatter, ['yaml'])
   .use(meta.parse)
-  .use(zone.collapse, {
+  .use(zone.collapse({
     test: ({type, value}) => {
       // your logic
     },
@@ -90,7 +133,7 @@ unified()
         children: nodes
       }
     }
-  })
+  }))
 
 const stringifier = unified()
   .use(remarkStringify, {
@@ -98,7 +141,7 @@ const stringifier = unified()
   })
   .use(frontmatter, ['yaml'])
   .use(meta.format)
-  .use(zone.expand, {
+  .use(zone.expand({
     test: ({type}) => type === 'zone',
     mutate: (node) => {
       // your logic
@@ -114,5 +157,5 @@ const stringifier = unified()
         }
       ]
     }
-  })
+  }))
 ```

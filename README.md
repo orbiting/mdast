@@ -26,7 +26,7 @@ new MarkdownSerializer({
 
 ## Remark Preset
 
-Preconfigured [remark](https://github.com/remarkjs/remark) with plugins for a custom `zone` type and yaml meta data.
+Preconfigured [remark](https://github.com/remarkjs/remark) with plugins for `zone`, `sub` and `sup` types and yaml meta data.
 
 Use this on your server if you want to persist mdast tree as strings—markdown files. In your editor to import and export markdown. Or as a helper in your test to skip writing mdast trees by hand.
 

@@ -1,6 +1,6 @@
 // Inspired by https://github.com/gut-leben-in-deutschland/bericht/blob/master/cabinet/markdown/mdast-zone.js and https://github.com/wooorm/mdast-zone/blob/10ec59489d045535742ce99f6f5692efbccf7038/index.js
 
-export const collapse = ({test, mutate}) => {
+export const collapse = ({test, mutate}) => () => {
   const collectZones = (parent) => {
     if (!parent.children || parent.children.length === 0) {
       return parent
@@ -51,6 +51,10 @@ export const collapse = ({test, mutate}) => {
     } else if (collected.start) {
       console.error(collected.start)
       throw Error('zone not ended')
+    } else {
+      parent.children.forEach(node => {
+        collectZones(node)
+      })
     }
 
     if (collected.ended) {
@@ -63,7 +67,7 @@ export const collapse = ({test, mutate}) => {
   return collectZones
 }
 
-export const expand = ({test, mutate}) => {
+export const expand = ({test, mutate}) => () => {
   const expandZone = (parent) => {
     if (!parent.children || parent.children.length === 0) {
       return parent
