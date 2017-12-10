@@ -5,6 +5,7 @@ import frontmatter from 'remark-frontmatter'
 
 import * as zone from './zone'
 import * as meta from './meta'
+import * as span from './span'
 
 const collapseTag = tag => zone.collapse({
   test: ({type, value}) => {
@@ -79,6 +80,7 @@ const parser = unified()
   }))
   .use(collapseTag('sub'))
   .use(collapseTag('sup'))
+  .use(span.collapse)
 
 export const parse = md => parser.runSync(parser.parse(md))
 
@@ -113,5 +115,7 @@ const stringifier = unified()
   }))
   .use(expandTag('sub'))
   .use(expandTag('sup'))
+  .use(span.expand)
+
 export const stringify = mdast =>
   stringifier.stringify(stringifier.runSync(mdast))

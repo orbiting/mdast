@@ -67,37 +67,66 @@ Zones can be nested and can have data (stringified as json in a code node). Unde
 Yields following AST:
 
 ```js
+[
+  {
+    type: 'heading',
+    depth: 1,
+    children: [
+      {type: 'text', value: 'CO'},
+      {
+        type: 'sub',
+        children: [
+          {type: 'text', value: '2'}
+        ]
+      }
+    ]
+  },
+  {
+    type: 'paragraph',
+    children: [
+      {type: 'text', value: '40 µg/m'},
+      {
+        type: 'sup',
+        children: [
+          {type: 'text', value: '3'}
+        ]
+      }
+    ]
+  }
+]
+```
+
+### `span` Type
+
+Need custom inline nodes? Use `span`.
+
+```html
+<span data-number="10000">10'000</span>
+```
+
+Yields following AST:
+
+```js
 {
-  type: 'root',
+  type: 'paragraph',
   children: [
     {
-      type: 'heading',
-      depth: 1,
+      type: 'span',
+      data: {
+        number: '10000'
+      },
       children: [
-        {type: 'text', value: 'CO'},
         {
-          type: 'sub',
-          children: [
-            {type: 'text', value: '2'}
-          ]
-        }
-      ]
-    },
-    {
-      type: 'paragraph',
-      children: [
-        {type: 'text', value: '40 µg/m'},
-        {
-          type: 'sup',
-          children: [
-            {type: 'text', value: '3'}
-          ]
+          type: 'text',
+          value: '10\'000'
         }
       ]
     }
   ]
 }
 ```
+
+`node.data` must be a flat object with only strings. Each key gets mapped to its own data attribute. You can store complex data, if you really need to, by using one key with stringified json.
 
 ### Meta Data
 
@@ -115,6 +144,7 @@ import frontmatter from 'remark-frontmatter'
 
 import * as meta from '@orbiting/remark-preset/lib/meta'
 import * as zone from '@orbiting/remark-preset/lib/zone'
+import * as span from '@orbiting/remark-preset/lib/span'
 
 unified()
   .use(remarkParse, {
@@ -134,6 +164,7 @@ unified()
       }
     }
   }))
+  .use(span.collapse)
 
 const stringifier = unified()
   .use(remarkStringify, {
@@ -158,4 +189,5 @@ const stringifier = unified()
       ]
     }
   }))
+  .use(span.expand)
 ```

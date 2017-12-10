@@ -41,9 +41,11 @@
   },
   "dependencies": {
     "js-yaml": "^3.10.0",
+    "parse-entities": "^1.1.1",
     "remark-frontmatter": "^1.1.0",
     "remark-parse": "^4.0.0",
     "remark-stringify": "^4.0.0",
+    "stringify-entities": "^1.3.1",
     "unified": "^6.1.5"
   }
 }
