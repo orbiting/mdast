@@ -210,7 +210,7 @@ const schema = {
                   props: (node, index, parent) => ({
                     data: (parent && parent.data) || {}
                   }),
-                  editorModule: 'paragraph',
+                  editorModule: 'figureCaption',
                   editorOptions: {
                     type: 'figureCaption',
                     placeholder: 'Legende'
