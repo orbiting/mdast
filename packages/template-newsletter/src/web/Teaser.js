@@ -35,18 +35,18 @@ const parseDate = string => {
 }
 const formatPublishDate = timeFormat('%d. %B %Y')
 
-const CardLink = ({slug, href, children}) => children
+const CardLink = ({path, slug, href, children}) => children
 
-const Card = ({slug, href, title, publishDate, image, imageAlt, Link = CardLink}) => {
+const Card = ({path, slug, href, title, publishDate, image, imageAlt, Link = CardLink}) => {
   let parsedDate = parseDate(publishDate)
   return (
     <div {...containerStyle}>
-      <Link href={href} slug={slug}>
+      <Link href={href} path={path} slug={slug}>
         <a {...imageStyle}>
           <img src={imageResizeUrl(image, '580x326')} alt={imageAlt} />
         </a>
       </Link>
-      <Link href={href} slug={slug}>
+      <Link href={href} path={path} slug={slug}>
         <a {...textStyle}>
           <H3>{title}</H3>
           {!!parsedDate && <P>{formatPublishDate(parsedDate)}</P>}
