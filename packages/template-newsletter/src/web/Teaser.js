@@ -11,8 +11,7 @@ const timeFormat = timeFormatLocale(timeDefinition).format
 
 const containerStyle = css({
   height: '100%',
-  backgroundColor: '#f2f2f2',
-  maxWidth: 290
+  backgroundColor: '#f2f2f2'
 })
 const imageStyle = css({
   display: 'block',
