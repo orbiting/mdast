@@ -63,3 +63,25 @@ test('sup serialization', assert => {
 
   assert.end()
 })
+
+test('ignore invalid inline zones', assert => {
+  const md = `CO<sub>2</sub>
+
+<sub>invalid multi paragraph zone
+
+content
+
+the end</sub>\n`
+  let rootNode
+  assert.doesNotThrow(() => {
+    rootNode = parse(md)
+  })
+
+  const p0 = rootNode.children[0]
+  assert.equal(p0.children[1].type, 'sub')
+
+  const p1 = rootNode.children[1]
+  assert.equal(p1.children[0].type, 'html')
+
+  assert.end()
+})

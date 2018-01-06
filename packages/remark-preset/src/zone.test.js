@@ -146,3 +146,12 @@ test('sequential and nested zone serialization', assert => {
 
   assert.end()
 })
+
+test('ignore unclosed zones', assert => {
+  const md = `<section><h6>BAB</h6>\n`
+  let rootNode
+  assert.doesNotThrow(() => {
+    rootNode = parse(md)
+  })
+  assert.end()
+})

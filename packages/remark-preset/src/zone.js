@@ -48,10 +48,13 @@ export const collapse = ({test, mutate}) => () => {
         endI - startI + 1,
         zone
       )
-    } else if (collected.start) {
-      console.error(collected.start)
-      throw Error('zone not ended')
     } else {
+      if (collected.start) {
+        console.warn(
+          'zone not ended',
+          collected.start
+        )
+      }
       parent.children.forEach(node => {
         collectZones(node)
       })
