@@ -42,7 +42,7 @@ The mdast tree to render.
 Rules to render with
 
 `options.MissingNode`: `false | ReactComponent`  
-A component to display when no rules matches. You can also pass false to throw if there is an unhandled mdast node.
+A component to display when no rules matches. You can also pass false to throw if there is an unhandled mdast node. The component receives an `node`, `index`, `parent` and `ancestors` prop.
 
 `options.ancestors`: `undefined | [Mdast]`  
 If you're rendering a sub tree you should pass the ancestors via options. The immediate parent is expected at index 0. Used for `matchMdast` (immediate parent) and `props` (parent and ancestors).

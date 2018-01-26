@@ -33,7 +33,7 @@ export const renderMdast = (mdast, schema, options = {}) => {
         ].join(' '))
       }
       return (
-        <MissingNode key={index} node={node}>
+        <MissingNode key={index} node={node} index={index} parent={parent} ancestors={nodeAncestors}>
           {visitChildren(node, nodeAncestors)}
         </MissingNode>
       )
