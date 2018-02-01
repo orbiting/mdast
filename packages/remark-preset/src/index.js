@@ -31,9 +31,14 @@ const parser = unified()
       let data = {}
       const identifier = start.value.match(/<h6>([^<]+)<\/h6>/)[1].trim()
       const dataNode = nodes[0]
-      const hasDataNode = dataNode && dataNode.type === 'code'
+      let hasDataNode = dataNode && dataNode.type === 'code' && dataNode.lang === null
       if (hasDataNode) {
-        data = JSON.parse(dataNode.value)
+        try {
+          data = JSON.parse(dataNode.value)
+        }
+        catch (e) {
+          hasDataNode = false
+        }
       }
       return {
         type: 'zone',

@@ -155,3 +155,38 @@ test('ignore unclosed zones', assert => {
   })
   assert.end()
 })
+
+test('zone with first html code child', assert => {
+  const md = `<section><h6>HTML</h6>
+
+\`\`\`html
+<div></div>
+\`\`\`
+
+<hr /></section>\n`
+  let rootNode
+  assert.doesNotThrow(() => {
+    rootNode = parse(md)
+  })
+  assert.end()
+})
+
+test('zone with first code child', assert => {
+  const md = `<section><h6>HTML</h6>
+
+\`\`\`
+Not valid JSON
+\`\`\`
+
+<hr /></section>\n`
+  let rootNode
+  assert.doesNotThrow(() => {
+    rootNode = parse(md)
+  })
+
+  const zone = rootNode.children[0]
+
+  assert.deepEqual(zone.data, {})
+
+  assert.end()
+})
