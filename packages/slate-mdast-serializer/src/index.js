@@ -2,15 +2,15 @@ import { Value } from 'slate'
 import isEqual from 'lodash.isequal'
 
 const rootRule = {
-  match: object => object.kind === 'document',
+  match: object => object.object === 'document',
   matchMdast: node => node.type === 'root',
   fromMdast: (node, index, parent, {visitChildren}) => ({
     document: {
       data: node.meta,
-      kind: 'document',
+      object: 'document',
       nodes: visitChildren(node)
     },
-    kind: 'value'
+    object: 'value'
   }),
   toMdast: (object, index, parent, {visitChildren}) => ({
     type: 'root',
@@ -84,7 +84,7 @@ class MdastSerializer {
     }
     const visitArray = (nodes, parent) => {
       return nodes.reduce((children, child, i) => {
-        if (child.kind === 'text') {
+        if (child.object === 'text') {
           return children.concat(
             visitLeaves(child.leaves, child)
           )
@@ -138,7 +138,7 @@ class MdastSerializer {
       return nodes.reduce(
         (compact, node) => {
           const prev = compact[compact.length - 1]
-          if (prev && prev.kind === 'text' && node.kind === 'text') {
+          if (prev && prev.object === 'text' && node.object === 'text') {
             prev.leaves = prev.leaves.concat(node.leaves)
             return compact
           }
@@ -163,12 +163,12 @@ class MdastSerializer {
       const { type, data } = mark
 
       const applyMark = (node) => {
-        if (node.kind === 'mark') {
+        if (node.object === 'mark') {
           return deserializeMark(node)
-        } else if (node.kind === 'text') {
+        } else if (node.object === 'text') {
           node.leaves = node.leaves.map((range) => {
             range.marks.unshift({
-              kind: 'mark',
+              object: 'mark',
               type,
               data
             })
@@ -189,10 +189,10 @@ class MdastSerializer {
     const visit = (node, index, parent) => {
       if (node.type === 'text') {
         return {
-          kind: 'text',
+          object: 'text',
           leaves: [
             {
-              kind: 'leaf',
+              object: 'leaf',
               text: node.value,
               marks: []
             }
@@ -214,7 +214,7 @@ class MdastSerializer {
         )
       }
 
-      if (slateNode.kind === 'mark') {
+      if (slateNode.object === 'mark') {
         return deserializeMark(slateNode)
       }
       return slateNode
