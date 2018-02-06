@@ -66,6 +66,7 @@ const schema = {
 }
 
 renderMdast(mdast, schema)
+
 ```
 
 - [Try it in your browser](https://runkit.com/tpreusse/mdast-react-render)
