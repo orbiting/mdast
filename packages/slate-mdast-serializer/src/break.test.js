@@ -8,7 +8,7 @@ const serializer = new MarkdownSerializer({
       match: object => object.type === 'p',
       matchMdast: (node) => node.type === 'paragraph',
       fromMdast: (node, index, parent, {visitChildren}) => ({
-        kind: 'block',
+        object: 'block',
         type: 'p',
         nodes: visitChildren(node)
       }),
@@ -21,7 +21,7 @@ const serializer = new MarkdownSerializer({
       match: object => object.type === 'b',
       matchMdast: (node) => node.type === 'strong',
       fromMdast: (node, index, parent, {visitChildren}) => ({
-        kind: 'mark',
+        object: 'mark',
         type: 'b',
         nodes: visitChildren(node)
       }),
@@ -33,8 +33,8 @@ const serializer = new MarkdownSerializer({
     {
       matchMdast: (node) => node.type === 'break',
       fromMdast: () => ({
-        kind: 'text',
-        leaves: [{kind: 'leaf', text: '\n', marks: []}],
+        object: 'text',
+        leaves: [{object: 'leaf', text: '\n', marks: []}],
       })
     }
   ]
