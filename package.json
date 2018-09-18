@@ -37,7 +37,8 @@
     "postinstall": "lerna bootstrap",
     "commitmsg": "validate-commit-msg",
     "test": "lerna run test",
-    "lerna": "lerna"
+    "lerna": "lerna",
+    "cloc": "find . -name '*.js' -not -path \"*/node_modules*\" -not -path \"*/lib*\" | xargs wc -l"
   },
   "author": "Thomas Preusse <t@preus.se> (https://t.preus.se/)"
 }
