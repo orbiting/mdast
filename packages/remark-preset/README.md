@@ -12,7 +12,7 @@ import { parse } from '@orbiting/remark-preset'
 parse(md): Mdast
 ```
 
-`md`: String
+`md`: String  
 The markdown to parse.
 
 Returns a mdast tree.
@@ -25,7 +25,7 @@ import { stringify } from '@orbiting/remark-preset'
 stringify(mdast): String
 ```
 
-`md`: String
+`mdast`: Object  
 The mdast tree to stringify.
 
 Returns a markdown string.
