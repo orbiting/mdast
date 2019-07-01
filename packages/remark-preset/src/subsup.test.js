@@ -85,3 +85,28 @@ the end</sub>\n`
 
   assert.end()
 })
+
+
+test('sups in children after end', assert => {
+  const md = `<sup>2</sup>: **<sup>2</sup>**, _<sup>2</sup>_, **_<sup>2</sup>_**`
+
+  const rootNode = parse(md)
+  const p = rootNode.children[0]
+
+  assert.equal(p.children[0].type, 'sup')
+
+  const strong = p.children.find(node => node.type === 'strong')
+  assert.equal(strong.children[0].type, 'sup')
+
+  const emphasis = p.children.find(node => node.type === 'emphasis')
+  assert.equal(emphasis.children[0].type, 'sup')
+
+  const strongEmphasis = p.children.find(node => (
+    node.type === 'strong' &&
+    node.children[0].type === 'emphasis'
+  )).children[0]
+
+  assert.equal(strongEmphasis.children[0].type, 'sup')
+
+  assert.end()
+})

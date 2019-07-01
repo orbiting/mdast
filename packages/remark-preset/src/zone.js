@@ -39,8 +39,6 @@ export const collapse = ({test, mutate}) => () => {
         zoneChildren,
         collected.end
       )
-      // collect nested zones
-      collectZones(zone)
 
       // replace old children
       children.splice(
@@ -48,6 +46,11 @@ export const collapse = ({test, mutate}) => () => {
         endI - startI + 1,
         zone
       )
+
+      // collect nested zones
+      children.forEach(node => {
+        collectZones(node)
+      })
     } else {
       if (collected.start) {
         console.warn(
