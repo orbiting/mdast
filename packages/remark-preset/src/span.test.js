@@ -57,3 +57,33 @@ test('span data is string only', assert => {
 
   assert.end()
 })
+
+test('span data contains equal sign', assert => {
+  const md = '<span data-attr="foo=bar">child</span>\n'
+  const rootNode = parse(md)
+
+  const { data } = rootNode.children[0].children[0]
+
+  assert.equal(data.attr, 'foo=bar')
+  assert.end()
+})
+
+test('span data contains multiple equal signs', assert => {
+  const md = '<span data-attr="foo=bar, fizz=buzz">child</span>\n'
+  const rootNode = parse(md)
+
+  const { data } = rootNode.children[0].children[0]
+
+  assert.equal(data.attr, 'foo=bar, fizz=buzz')
+  assert.end()
+})
+
+test('span data contains data attribute resembling data', assert => {
+  const md = '<span data-attr="data-hero=&#x22;Spiderman&#x22;">child</span>\n'
+  const rootNode = parse(md)
+
+  const { data } = rootNode.children[0].children[0]
+
+  assert.equal(data.attr, 'data-hero="Spiderman"')
+  assert.end()
+})

@@ -19,10 +19,8 @@ export const collapse = zone.collapse({
     const data = {}
     const dataAttrs = start.value.match(/data-([^=]+)="([^"]+)"/g) || []
     dataAttrs.forEach(d => {
-      const [key, value] = d.split('=')
-      data[
-        decodeEntities(key.replace(/^data-/, ''))
-      ] = decodeEntities(value.slice(1, -1))
+      const [, key, value] = d.match(/^data-(.+?)="(.+)"/)
+      data[decodeEntities(key)] = decodeEntities(value)
     })
     return {
       type: 'span',
