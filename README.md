@@ -1,5 +1,7 @@
 # Mdast Utils
 
+⚠️ This repository together with others has been merged into the [republik/plattform](https://github.com/republik/plattform) monorepo. Let's continue the journey there. ⚠️
+
 This repository contains utilities we've used to combine [mdast](https://github.com/syntax-tree/mdast) and [Slate](https://github.com/ianstormtaylor/slate) in our CMS—[Publikator](https://github.com/orbiting/publikator-frontend).
 
 Packages in this repo, all available on NPM:
